@@ -38,7 +38,7 @@ export class AuthService {
         try {
             return await this.account.get()
         } catch (error) {
-            console.log("Appwrite service :: getCurrentUser :: error", error)
+            console.log("Appwrite auth :: getCurrentUser :: error", error)
 
         }
         return null;
@@ -49,7 +49,7 @@ export class AuthService {
             await this.account.deleteSessions()
         } catch (error) {
 
-            console.log("Appwrite service :: logout :: error", error)
+            console.log("Appwrite auth :: logout :: error", error)
 
         }
     }
