@@ -1,13 +1,43 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import authService from './appwrite/auth';
+import { login, logout } from './store/authSlice';
+import { Footer, Header } from './components';
+import { Outlet } from 'react-router-dom';
+
 
 const App = () => {
-  console.log(import.meta.env.VITE_APPWRITE_URL)
-  return (
-    <div className="flex justify-center items-center h-screen bg-[#1b1b1a] text-cyan-50">
-      <div className="bg-slate-700 p-8 rounded-lg hover:bg-white hover:text-black hover:scale-150 transition ease-in-out">Hello</div>
-    </div>
+  const [loading, setLoading] = useState(true)
+  const dispatch = useDispatch()
 
-  )
+  useEffect(() => {
+    authService.getCurrentUser()
+      .then((userData) => {
+        if (userData) {
+          dispatch(login({ userData }))
+        } else {
+          dispatch(logout())
+        }
+      })
+      .finally(()=>setLoading(false))
+
+
+  }, [])
+
+
+
+  return !loading ? (
+    <div className="min-h-screen flex flex-wrap content-between bg-gray-400">
+      <div className="w-full block">
+        <Header/>
+        <main>
+          {/* <Outlet/> */}
+        </main>
+        <Footer/>
+      </div>
+    </div>
+  ):null
 }
 
 export default App
