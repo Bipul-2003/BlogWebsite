@@ -24,7 +24,7 @@ export class Service {
                     content,
                     featuredImage,
                     status,
-                    userId
+                    userId,
                 })
         } catch (error) {
             console.log("Appwrite service :: createPost :: error", error)
@@ -60,9 +60,9 @@ export class Service {
     }
     async getPost(slug) {
         try {
-            await this.databases.getDocument(
+            return await this.databases.getDocument(
                 config.appwriteDatabaseId, config.appwriteCollectionId, slug)
-            return true
+            
         } catch (error) {
             console.log("Appwrite service :: getPost :: error", error)
             return false
@@ -85,7 +85,7 @@ export class Service {
             return await this.buckets.createFile(
                 config.appwriteBucketId,
                 ID.unique(),
-                file
+                file,
             )
         } catch (error) {
             console.log("Appwrite service :: uploadFile :: error", error)
@@ -105,8 +105,11 @@ export class Service {
 
         }
     }
-    getFilePreview(fileId) {
-        return this.buckets.getFilePreview(config.appwriteBucketId, fileId)
+    getfilePreview(fileId) {
+        return this.buckets.getFilePreview(
+            config.appwriteBucketId,
+            fileId
+        )
     }
 }
 
