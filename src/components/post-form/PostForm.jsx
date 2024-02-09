@@ -12,7 +12,7 @@ const PostForm = ({ post }) => {
     const [prompt, setPrompt] = useState("")
     const [result, setResult] = useState("")
 
-
+//gen ai integrated
     const genAI = new GoogleGenerativeAI(config.googlegenaiapikey);
     const generation_config = {
         "temperature": 0.9,
