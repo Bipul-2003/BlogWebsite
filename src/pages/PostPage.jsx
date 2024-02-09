@@ -18,7 +18,7 @@ const PostPage = () => {
   useEffect(() => {
     if (slug) {
         service.getPost(slug).then((post) => {
-          console.log('Post: ',post)
+          // console.log('Post: ',post)
             if (post) setPost(post);
             else navigate("/");
         });

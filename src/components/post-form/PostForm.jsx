@@ -7,22 +7,22 @@ import { useSelector } from 'react-redux'
 import { GoogleGenerativeAI } from '@google/generative-ai'
 import config from '../../config/config.js'
 
+
+
 const PostForm = ({ post }) => {
 
     const [prompt, setPrompt] = useState("")
     const [result, setResult] = useState("")
+    const [loader, setLoader] = useState(false)
 
-//gen ai integrated
+    //gen ai integrated
     const genAI = new GoogleGenerativeAI(config.googlegenaiapikey);
     const generation_config = {
-        "temperature": 0.9,
-        "top_p": 1,
-        "top_k": 1,
-        "max_output_tokens": 100,
+        "max_output_tokens": 10,
     }
 
-
-    async function run() {
+    const run = async (prompt, generation_config, genAI, setResult) => {
+        setLoader(true)
         // For text-only input, use the gemini-pro model
         const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
@@ -32,6 +32,7 @@ const PostForm = ({ post }) => {
         const response = await result.response;
         const text = response.text();
         setResult(text)
+        setLoader(false)
     }
 
 
@@ -145,18 +146,38 @@ const PostForm = ({ post }) => {
                     {post ? "Update" : "Submit"}
                 </Button>
 
-                <div class="w-full mt-12" >
-                    <div class="relative min-w-[200px]">
-                        <Input type="text" label="AI Suggestion: " value={prompt} onChange={(e) => setPrompt(e.target.value)} placeholder='Enter your topic' />
-                        <textarea disabled
-                            class="peer h-full my-4 min-h-[300px] w-full text-slate-100 resize-none rounded-[7px] border border-blue-gray-200 border-t-transparent bg-slate-500 px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-gray-900 focus:border-t-transparent focus:outline-0 disabled:resize-none disabled:border-0 disabled:bg-blue-gray-50"
-                            placeholder="" value={result}></textarea>
-                
-                        <Button onClick={run}>Generate</Button>
+                <div className="w-full mt-12" >
+                    <div className="relative min-w-[200px]">
+                        <Input type="text" label="AI Suggestion: " value={prompt} onChange={(e) => setPrompt(e.target.value)} placeholder='Enter your topic' onKeyDown={(e) => {
+
+                            if (e.key === 'Enter') {
+                                run(prompt, generation_config, genAI, setResult);
+                                setResult("")
+                            }
+                        }} />
+                        <div className="parent relative">
+                            {loader && <div className="absolute-div absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                                <div className='flex space-x-2 justify-center items-center bg-transparent dark:invert'>
+                                    <span className='sr-only'>Loading...</span>
+                                    <div className='h-4 w-4 bg-black rounded-full animate-bounce [animation-delay:-0.3s]'></div>
+                                    <div className='h-4 w-4 bg-black rounded-full animate-bounce [animation-delay:-0.15s]'></div>
+                                    <div className='h-4 w-4 bg-black rounded-full animate-bounce'></div>
+                                </div>
+                            </div>}
+
+                            <textarea disabled
+                                className="peer h-full my-4 min-h-[300px] w-full text-slate-100 resize-none rounded-[7px] border border-blue-gray-200 border-t-transparent  bg-slate-500 px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-gray-900 focus:border-t-transparent focus:outline-0 disabled:resize-none disabled:border-0 disabled:bg-blue-gray-50"
+                                placeholder="" value={result}></textarea>
+                        </div>
+
+                        <Button onClick={() => {
+                            run(prompt, generation_config, genAI, setResult);
+                            setResult("")
+                        }}>Generate</Button>
                     </div>
                 </div>
 
-
+                {/* <input type="text" /> */}
             </div>
         </form>
     )

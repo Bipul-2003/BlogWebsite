@@ -1,12 +1,11 @@
 import React from 'react'
-import { Container, Logo, LogoutBtn } from "../index"
-import { Link, useNavigate } from 'react-router-dom'
+import { LogoutBtn } from "../index"
+import { Link, NavLink } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
 const Header = () => {
 
   const authStatus = useSelector((state) => state.auth.status)
-  const navigate = useNavigate()
 
   const navItems = [
     {
@@ -53,10 +52,9 @@ const Header = () => {
               {navItems.map((item) =>
                 item.active ? (
                   <li key={item.name}>
-                    <button
-                      onClick={() => navigate(item.slug)}
-                      className='inline-block py-2 px-10 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700'
-                    >{item.name}</button>
+                    <NavLink to={item.slug} 
+                      className={({isActive})=>!isActive?`inline-block py-2 px-10 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700'`:`text-blue-700`}
+                      >{item.name}</NavLink>
                   </li>
                 ) : null
               )}

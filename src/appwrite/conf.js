@@ -78,6 +78,16 @@ export class Service {
             return false
         }
     }
+    async getUserPosts(currentUser) {
+        const queries = [Query.equal("userId",currentUser)]
+        try {
+            return await this.databases.listDocuments(
+                config.appwriteDatabaseId, config.appwriteCollectionId, queries)
+        } catch (error) {
+            console.log("Appwrite service :: getPosts :: error", error)
+            return false
+        }
+    }
 
     //file upload services
     async uploadFile(file) {
