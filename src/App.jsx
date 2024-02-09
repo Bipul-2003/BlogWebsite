@@ -20,7 +20,7 @@ const App = () => {
           dispatch(logout())
         }
       })
-      .finally(()=>setLoading(false))
+      .finally(() => setLoading(false))
 
 
   }, [])
@@ -28,16 +28,16 @@ const App = () => {
 
 
   return !loading ? (
-    <div className="min-h-screen flex flex-wrap content-between bg-gray-400">
+    <div className="min-h-screen flex flex-wrap content-between bg-gradient-to-tr from-gray-200 to-gray-500">
       <div className="w-full block">
-        <Header/>
+        <Header />
         <main>
-          <Outlet/>
+          <Outlet />
         </main>
-        <Footer/>
+        <Footer />
       </div>
     </div>
-  ):null
+  ) : null
 }
 
 export default App

@@ -39,7 +39,7 @@ const PostPage = () => {
   return post ? (
     <div className="py-8">
       <Container>
-        <div className="w-full flex justify-center mb-4 relative border rounded-xl p-2">
+        <div className="w-2/3 flex justify-center mb-4 relative border rounded-xl p-2 min-h-[310px]">
           <img
             src={service.getfilePreview(post.featuredImage)}
             alt={post.title}
