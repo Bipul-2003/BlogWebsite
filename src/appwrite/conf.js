@@ -62,7 +62,7 @@ export class Service {
         try {
             return await this.databases.getDocument(
                 config.appwriteDatabaseId, config.appwriteCollectionId, slug)
-            
+
         } catch (error) {
             console.log("Appwrite service :: getPost :: error", error)
             return false
@@ -79,7 +79,7 @@ export class Service {
         }
     }
     async getUserPosts(currentUser) {
-        const queries = [Query.equal("userId",currentUser)]
+        const queries = [Query.equal("userId", currentUser)]
         try {
             return await this.databases.listDocuments(
                 config.appwriteDatabaseId, config.appwriteCollectionId, queries)

@@ -130,15 +130,15 @@ const PostForm = ({ post }) => {
                 {post && (
                     <div className="w-full mb-4">
                         <img
-                            src={appwriteService.getFilePreview(post.featuredImage)}
+                            src={appwriteService.getfilePreview(post.featuredImage)}
                             alt={post.title}
-                            className="rounded-lg"
+                            className="rounded-lg h-20"
                         />
                     </div>
                 )}
                 <Select
                     options={["active", "inactive"]}
-                    label="Status"
+                    label="status"
                     className="mb-4"
                     {...register("status", { required: true })}
                 />

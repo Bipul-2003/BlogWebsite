@@ -28,7 +28,7 @@ const App = () => {
 
 
   return !loading ? (
-    <div className="min-h-screen flex flex-wrap content-between bg-gradient-to-tr from-gray-200 to-gray-500">
+    <div className=" flex flex-wrap content-between bg-gradient-to-tr from-gray-200 to-gray-500">
       <div className="w-full block">
         <Header />
         <main>
